@@ -9,6 +9,7 @@ PHP_VERSION='8.1'
 SYMFONY_VERSION='6.1.*'
 SERVER='nginx'
 DATABASE='postgresql'
+DATABASE_PORT='5432'
 
 select lng in 8.1 8.0.2 7.2.5
 do
@@ -73,9 +74,6 @@ do
     esac
 done
 
-read -p 'What will be the database name: ' DATABASE_NAME
-read -p 'What will be the database password: ' DATABASE_PASSWORD
-
 PS3='Select the webserver: '
 webserver_options=("Nginx" "Apache")
 
@@ -95,7 +93,10 @@ done
 echo "APP_ENV=dev" >> ./docker/.env
 
 if [ $DATABASE = 'postgresql' ]; then
-    echo "DATABASE_URL=\"postgresql://postgres:$DATABASE_PASSWORD@database-container:5432/$DATABASE_NAME?serverVersion=13&charset=utf8\"" >> ./docker/.env
+    read -p 'What will be the database name: ' DATABASE_NAME
+    read -p 'What will be the database password: ' DATABASE_PASSWORD
+
+    echo "DATABASE_URL=\"postgresql://postgres:$DATABASE_PASSWORD@database-container:$DATABASE_PORT/$DATABASE_NAME?serverVersion=13&charset=utf8\"" >> ./docker/.env
 
     echo '' >> ./docker/docker-compose.yml
     echo '' >> ./docker/docker-compose.yml
@@ -108,13 +109,38 @@ if [ $DATABASE = 'postgresql' ]; then
         POSTGRES_PASSWORD: $DATABASE_PASSWORD
         POSTGRES_DB: $DATABASE_NAME
     ports:
-        - 5432:5432
+        - $DATABASE_PORT:$DATABASE_PORT
     volumes:
         - ./data/postgres:/var/lib/postgresql/data" >> ./docker/docker-compose.yml
 fi
 
 if [ $DATABASE = 'mysql' ]; then
-    echo "DATABASE_URL=\"mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7\"" >> ./docker/.env
+    read -p 'What will be the database name: ' DATABASE_NAME
+    read -p 'What will be the database password: ' DATABASE_PASSWORD
+    read -p 'What will be the database user: ' MYSQL_USER
+    read -p 'What will be the mysql root password: ' MYSQL_ROOT_PASSWORD
+    
+    DATABASE_PORT='3306'
+
+    echo "DATABASE_URL=\"mysql://$MYSQL_USER:$DATABASE_PASSWORD@database-container:$DATABASE_PORT/$DATABASE_NAME?serverVersion=5.7\"" >> ./docker/.env
+
+    echo '' >> ./docker/docker-compose.yml
+    echo '' >> ./docker/docker-compose.yml
+
+    echo "  db:
+    container_name: database-container
+    image: mysql:8.0.23
+    platform: linux/x86_64
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$DATABASE_NAME
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$DATABASE_PASSWORD
+    ports:
+      - $DATABASE_PORT:$DATABASE_PORT"  >> ./docker/docker-compose.yml
 fi
 
 if [ $SERVER = 'nginx' ]; then
@@ -143,9 +169,11 @@ read -p 'What is your Git name: ' GIT_NAME
 
 echo "#!/bin/sh
 
-git config --global user.email "$GIT_EMAIL"
-git config --global user.name "$GIT_NAME"
-symfony new /var/www --version=\"$SYMFONY_VERSION\" --webapp" > ./docker/php-fpm/create-symfony-project.sh
+git config --global user.email \"$GIT_EMAIL\"
+git config --global user.name \"$GIT_NAME\"
+symfony new /var/www --version=\"$SYMFONY_VERSION\" --webapp
+composer i -o;
+wait-for-it db:$DATABASE_PORT -- bin/console doctrine:migrations:migrate" > ./docker/php-fpm/setup-symfony-project.sh
 
 echo "SYMFONY_VERSION="$SYMFONY_VERSION >> ./docker/.env
 echo "PHP_VERSION="$PHP_VERSION >> ./docker/.env
