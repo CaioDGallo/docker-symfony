@@ -30,15 +30,15 @@ PS3='Select the Symfony version: '
 symfony_versions_options=()
 
 if [ $PHP_VERSION = '8.1' ]; then
-    symfony_versions_options=("v6.1.*" "v6.0.12" "v5.4.12")
+    symfony_versions_options=("v6.1.*" "v6.0.*" "v5.4.*")
 fi
 
 if [ $PHP_VERSION = '8.0.2' ]; then
-    symfony_versions_options=("v6.0.12" "v5.4.12")
+    symfony_versions_options=("v6.0.*" "v5.4.*")
 fi
 
 if [ $PHP_VERSION = '7.2.5' ]; then
-    symfony_versions_options=("v5.4.12")
+    symfony_versions_options=("v5.4.*")
 fi
 
 select opt in "${symfony_versions_options[@]}"
@@ -47,11 +47,11 @@ do
         "v6.1.*")
             SYMFONY_VERSION="6.1.*"
             break;;
-        "v6.0.12")
-            SYMFONY_VERSION="6.0.12"
+        "v6.0.*")
+            SYMFONY_VERSION="6.0.*"
             break;;
-        "v5.4.12")
-            SYMFONY_VERSION="5.4.12"
+        "v5.4.*")
+            SYMFONY_VERSION="5.4.*"
             break;;
         *) echo "invalid option";;
     esac
