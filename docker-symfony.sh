@@ -90,6 +90,13 @@ do
     esac
 done
 
+read -p 'Do you wish to have a custom domain? e.g. dev.myproject.com  [y/n]' HAS_CUSTOM_DOMAIN
+
+if [ $HAS_CUSTOM_DOMAIN = 'y' ]; then
+    read -p 'Please type your custom domain: ' CUSTOM_DOMAIN
+    sed -i "s/localhost/$CUSTOM_DOMAIN www.$CUSTOM_DOMAIN/" docker/nginx/sites/default.conf
+fi
+
 echo "APP_ENV=dev" >> ./docker/.env
 
 if [ $DATABASE = 'postgresql' ]; then
@@ -105,6 +112,8 @@ if [ $DATABASE = 'postgresql' ]; then
     container_name: database-container
     image: postgres:12
     restart: always
+    networks:
+      - docker-symfony
     environment:
         POSTGRES_PASSWORD: $DATABASE_PASSWORD
         POSTGRES_DB: $DATABASE_NAME
@@ -131,6 +140,8 @@ if [ $DATABASE = 'mysql' ]; then
     container_name: database-container
     image: mysql:8.0.23
     platform: linux/x86_64
+    networks:
+      - docker-symfony
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - ./data/mysql:/var/lib/mysql
@@ -151,6 +162,8 @@ if [ $SERVER = 'nginx' ]; then
     container_name: server-container
     build:
       context: ./nginx
+    networks:
+      - docker-symfony
     volumes:
       - ./../src/:/var/www
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -172,6 +185,8 @@ if [ $SERVER = 'apache' ]; then
         container_name: server-container
         build:
           context: ./apache
+        networks:
+          - docker-symfony
         volumes:
           - ./../src/:/var/www
           - ./apache/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
@@ -183,6 +198,11 @@ if [ $SERVER = 'apache' ]; then
           - \"80:80\"
           - \"443:443\"" >> ./docker/docker-compose.yml
 fi
+      
+echo '' >> ./docker/docker-compose.yml
+
+echo "networks:
+  docker-symfony:" >> ./docker/docker-compose.yml
 
 read -p 'What is your Git email: ' GIT_EMAIL
 read -p 'What is your Git name: ' GIT_NAME

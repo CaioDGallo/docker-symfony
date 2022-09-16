@@ -8,6 +8,8 @@ services:
       args:
         - PHP_VERSION=${PHP_VERSION}
         - SYMFONY_VERSION=${SYMFONY_VERSION}
+    networks:
+      - docker-symfony
     depends_on:
       - db
     environment:
