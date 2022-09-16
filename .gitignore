@@ -1,3 +1,5 @@
 docker/data
 docker/logs/nginx/*
+docker/logs/apache/*
 docker/.env
+docker/php-fpm/setup-symfony-project.sh
