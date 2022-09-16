@@ -1,0 +1,47 @@
+AH00112: Warning: DocumentRoot [/var/www/public] does not exist
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Thu Sep 15 21:38:06.682881 2022] [mpm_event:notice] [pid 18:tid 140528499140480] AH00489: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Thu Sep 15 21:38:06.682951 2022] [core:notice] [pid 18:tid 140528499140480] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+AH00112: Warning: DocumentRoot [/var/www/public] does not exist
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Thu Sep 15 21:44:51.300302 2022] [mpm_event:notice] [pid 18:tid 139740440606592] AH00489: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Thu Sep 15 21:44:51.300414 2022] [core:notice] [pid 18:tid 139740440606592] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+AH00112: Warning: DocumentRoot [/var/www/public] does not exist
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Thu Sep 15 22:35:15.360689 2022] [mpm_event:notice] [pid 18:tid 139890813237120] AH00489: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Thu Sep 15 22:35:15.360858 2022] [core:notice] [pid 18:tid 139890813237120] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+AH00112: Warning: DocumentRoot [/var/www/public] does not exist
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Thu Sep 15 22:47:50.080180 2022] [mpm_event:notice] [pid 18:tid 140173386078080] AH00489: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Thu Sep 15 22:47:50.080262 2022] [core:notice] [pid 18:tid 140173386078080] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+[Thu Sep 15 22:51:18.839866 2022] [mpm_event:notice] [pid 18:tid 140173386078080] AH00491: caught SIGTERM, shutting down
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Thu Sep 15 22:52:52.825653 2022] [mpm_event:notice] [pid 11:tid 139910262749056] AH00489: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Thu Sep 15 22:52:52.825726 2022] [core:notice] [pid 11:tid 139910262749056] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+AH00112: Warning: DocumentRoot [/var/www/public] does not exist
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Thu Sep 15 23:00:45.468533 2022] [mpm_event:notice] [pid 18:tid 139752935475072] AH00489: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Thu Sep 15 23:00:45.468607 2022] [core:notice] [pid 18:tid 139752935475072] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Thu Sep 15 23:12:01.373120 2022] [mpm_event:notice] [pid 18:tid 139931110971264] AH00489: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Thu Sep 15 23:12:01.373227 2022] [core:notice] [pid 18:tid 139931110971264] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Thu Sep 15 23:23:09.530585 2022] [mpm_event:notice] [pid 17:tid 140020713158528] AH00489: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Thu Sep 15 23:23:09.530657 2022] [core:notice] [pid 17:tid 140020713158528] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Thu Sep 15 23:32:16.306196 2022] [mpm_prefork:notice] [pid 11] AH00163: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Thu Sep 15 23:32:16.306218 2022] [core:notice] [pid 11] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+[Fri Sep 16 01:43:49.892537 2022] [so:warn] [pid 11] AH01574: module deflate_module is already loaded, skipping
+AH00112: Warning: DocumentRoot [/var/www/html/] does not exist
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Fri Sep 16 01:43:49.900989 2022] [mpm_prefork:notice] [pid 11] AH00163: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Fri Sep 16 01:43:49.901009 2022] [core:notice] [pid 11] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+[Fri Sep 16 01:45:18.904842 2022] [so:warn] [pid 11] AH01574: module deflate_module is already loaded, skipping
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Fri Sep 16 01:45:18.915974 2022] [mpm_prefork:notice] [pid 11] AH00163: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Fri Sep 16 01:45:18.915995 2022] [core:notice] [pid 11] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'
+[Fri Sep 16 01:45:45.990971 2022] [proxy:error] [pid 12] [client 172.20.0.1:56724] AH00898: DNS lookup failure for: php returned by /index.php
+[Fri Sep 16 01:48:46.706494 2022] [so:warn] [pid 11] AH01574: module deflate_module is already loaded, skipping
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.20.0.4. Set the 'ServerName' directive globally to suppress this message
+[Fri Sep 16 01:48:46.716926 2022] [mpm_prefork:notice] [pid 11] AH00163: Apache/2.4.52 (Ubuntu) configured -- resuming normal operations
+[Fri Sep 16 01:48:46.716945 2022] [core:notice] [pid 11] AH00094: Command line: '/usr/sbin/apache2 -D FOREGROUND'

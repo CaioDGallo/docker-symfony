@@ -164,6 +164,26 @@ if [ $SERVER = 'nginx' ]; then
       - \"443:443\"" >> ./docker/docker-compose.yml
 fi
 
+if [ $SERVER = 'apache' ]; then
+    echo '' >> ./docker/docker-compose.yml
+    echo '' >> ./docker/docker-compose.yml
+
+    echo "  apache:
+        container_name: server-container
+        build:
+          context: ./apache
+        volumes:
+          - ./../src/:/var/www
+          - ./apache/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+          - ./apache/apache2.conf:/etc/apache2/apache2.conf
+          - ./logs/apache:/var/log/apache2
+        depends_on:
+          - php-fpm
+        ports:
+          - \"80:80\"
+          - \"443:443\"" >> ./docker/docker-compose.yml
+fi
+
 read -p 'What is your Git email: ' GIT_EMAIL
 read -p 'What is your Git name: ' GIT_NAME
 

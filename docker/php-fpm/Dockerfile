@@ -10,12 +10,14 @@ COPY wait-for-it.sh /usr/bin/wait-for-it
 RUN chmod +x /usr/bin/wait-for-it
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends libssl-dev zlib1g-dev curl git unzip netcat libxml2-dev libpq-dev libzip-dev && \
+    apt-get install -y --no-install-recommends libssl-dev zlib1g-dev curl git libapache2-mod-fcgid vim unzip netcat libxml2-dev libpq-dev libzip-dev && \
     pecl install apcu && \
     docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
     docker-php-ext-install -j$(nproc) zip opcache intl pdo_pgsql pdo_mysql pgsql && \
     docker-php-ext-enable apcu pdo_pgsql sodium && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+COPY php-fpm-pool.conf 	/usr/local/etc/php/pool.d/www.conf
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
