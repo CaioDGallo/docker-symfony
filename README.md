@@ -1,7 +1,8 @@
 ## To-Do
 
-- Create instructions for adding custom vhost to /etc/hosts
 - Make docker-symfony.sh create the project on the specified folder/path and copy the docker folder there.
+- Add SSL to nginx
+- sudo rm -rf /etc/docker-symfony && sudo rm -rf /usr/bin/docker-symfony && sudo cp -r /home/caiogallo/Documents/caio_projects/docker-symfony /etc/docker-symfony && sudo cp /home/caiogallo/Documents/caio_projects/docker-symfony/docker-symfony.sh /usr/bin/docker-symfony && sudo chmod 755 /usr/bin/docker-symfony && sudo chown -R $(whoami) /etc/docker-symfony
 
 
 # Docker-Symfony

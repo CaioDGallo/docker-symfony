@@ -2,7 +2,16 @@
 
 echo 'Welcome to the docker-symfony setup'
 
-echo '' > ./docker/.env
+
+PROJECT_PATH=$1
+
+if [ "$1" == "." ]; then
+    PROJECT_PATH=$(pwd)
+fi
+
+cp -r /etc/docker-symfony/docker $PROJECT_PATH
+
+echo '' > $PROJECT_PATH/docker/.env
 
 PS3="Select the PHP version: "
 PHP_VERSION='8.1'
@@ -96,24 +105,24 @@ if [ $HAS_CUSTOM_DOMAIN = 'y' ]; then
     read -p 'Please type your custom domain: ' CUSTOM_DOMAIN
 
     if [ $SERVER = 'nginx' ]; then
-        sed -i "s/localhost/$CUSTOM_DOMAIN www.$CUSTOM_DOMAIN/" docker/nginx/sites/default.conf
+        sed -i "s/localhost/$CUSTOM_DOMAIN www.$CUSTOM_DOMAIN/" $PROJECT_PATH/docker/nginx/sites/default.conf
     fi
 
     if [ $SERVER = 'apache' ]; then
-        sed -i "s/docker-symfony.dev/$CUSTOM_DOMAIN/" docker/apache/vhost.conf
+        sed -i "s/docker-symfony.dev/$CUSTOM_DOMAIN/" $PROJECT_PATH/docker/apache/vhost.conf
     fi
 fi
 
-echo "APP_ENV=dev" >> ./docker/.env
+echo "APP_ENV=dev" >> $PROJECT_PATH/docker/.env
 
 if [ $DATABASE = 'postgresql' ]; then
     read -p 'What will be the database name: ' DATABASE_NAME
     read -p 'What will be the database password: ' DATABASE_PASSWORD
 
-    echo "DATABASE_URL=\"postgresql://postgres:$DATABASE_PASSWORD@database-container:$DATABASE_PORT/$DATABASE_NAME?serverVersion=13&charset=utf8\"" >> ./docker/.env
+    echo "DATABASE_URL=\"postgresql://postgres:$DATABASE_PASSWORD@database-container:$DATABASE_PORT/$DATABASE_NAME?serverVersion=13&charset=utf8\"" >> $PROJECT_PATH/docker/.env
 
-    echo '' >> ./docker/docker-compose.yml
-    echo '' >> ./docker/docker-compose.yml
+    echo '' >> $PROJECT_PATH/docker/docker-compose.yml
+    echo '' >> $PROJECT_PATH/docker/docker-compose.yml
 
     echo "  db:
     container_name: database-container
@@ -127,7 +136,7 @@ if [ $DATABASE = 'postgresql' ]; then
     ports:
         - $DATABASE_PORT:$DATABASE_PORT
     volumes:
-        - ./data/postgres:/var/lib/postgresql/data" >> ./docker/docker-compose.yml
+        - ./data/postgres:/var/lib/postgresql/data" >> $PROJECT_PATH/docker/docker-compose.yml
 fi
 
 if [ $DATABASE = 'mysql' ]; then
@@ -138,10 +147,10 @@ if [ $DATABASE = 'mysql' ]; then
     
     DATABASE_PORT='3306'
 
-    echo "DATABASE_URL=\"mysql://$MYSQL_USER:$DATABASE_PASSWORD@database-container:$DATABASE_PORT/$DATABASE_NAME?serverVersion=5.7\"" >> ./docker/.env
+    echo "DATABASE_URL=\"mysql://$MYSQL_USER:$DATABASE_PASSWORD@database-container:$DATABASE_PORT/$DATABASE_NAME?serverVersion=5.7\"" >> $PROJECT_PATH/docker/.env
 
-    echo '' >> ./docker/docker-compose.yml
-    echo '' >> ./docker/docker-compose.yml
+    echo '' >> $PROJECT_PATH/docker/docker-compose.yml
+    echo '' >> $PROJECT_PATH/docker/docker-compose.yml
 
     echo "  db:
     container_name: database-container
@@ -158,12 +167,12 @@ if [ $DATABASE = 'mysql' ]; then
       - MYSQL_USER=$MYSQL_USER
       - MYSQL_PASSWORD=$DATABASE_PASSWORD
     ports:
-      - $DATABASE_PORT:$DATABASE_PORT"  >> ./docker/docker-compose.yml
+      - $DATABASE_PORT:$DATABASE_PORT"  >> $PROJECT_PATH/docker/docker-compose.yml
 fi
 
 if [ $SERVER = 'nginx' ]; then
-    echo '' >> ./docker/docker-compose.yml
-    echo '' >> ./docker/docker-compose.yml
+    echo '' >> $PROJECT_PATH/docker/docker-compose.yml
+    echo '' >> $PROJECT_PATH/docker/docker-compose.yml
 
     echo "  nginx:
     container_name: server-container
@@ -181,12 +190,12 @@ if [ $SERVER = 'nginx' ]; then
       - php-fpm
     ports:
       - \"80:80\"
-      - \"443:443\"" >> ./docker/docker-compose.yml
+      - \"443:443\"" >> $PROJECT_PATH/docker/docker-compose.yml
 fi
 
 if [ $SERVER = 'apache' ]; then
-    echo '' >> ./docker/docker-compose.yml
-    echo '' >> ./docker/docker-compose.yml
+    echo '' >> $PROJECT_PATH/docker/docker-compose.yml
+    echo '' >> $PROJECT_PATH/docker/docker-compose.yml
 
     echo "  apache:
         container_name: server-container
@@ -203,13 +212,13 @@ if [ $SERVER = 'apache' ]; then
           - php-fpm
         ports:
           - \"80:80\"
-          - \"443:443\"" >> ./docker/docker-compose.yml
+          - \"443:443\"" >> $PROJECT_PATH/docker/docker-compose.yml
 fi
       
-echo '' >> ./docker/docker-compose.yml
+echo '' >> $PROJECT_PATH/docker/docker-compose.yml
 
 echo "networks:
-  docker-symfony:" >> ./docker/docker-compose.yml
+  docker-symfony:" >> $PROJECT_PATH/docker/docker-compose.yml
 
 read -p 'What is your Git email: ' GIT_EMAIL
 read -p 'What is your Git name: ' GIT_NAME
@@ -220,12 +229,15 @@ git config --global user.email \"$GIT_EMAIL\"
 git config --global user.name \"$GIT_NAME\"
 symfony new /var/www --version=\"$SYMFONY_VERSION\" --webapp
 composer i -o;
-wait-for-it db:$DATABASE_PORT -- bin/console doctrine:migrations:migrate" > ./docker/php-fpm/setup-symfony-project.sh
+wait-for-it db:$DATABASE_PORT -- bin/console doctrine:migrations:migrate" > $PROJECT_PATH/docker/php-fpm/setup-symfony-project.sh
 
-echo "SYMFONY_VERSION="$SYMFONY_VERSION >> ./docker/.env
-echo "PHP_VERSION="$PHP_VERSION >> ./docker/.env
-echo "DATABASE="$DATABASE >> ./docker/.env
-echo "SERVER="$SERVER >> ./docker/.env
+echo "SYMFONY_VERSION="$SYMFONY_VERSION >> $PROJECT_PATH/docker/.env
+echo "PHP_VERSION="$PHP_VERSION >> $PROJECT_PATH/docker/.env
+echo "DATABASE="$DATABASE >> $PROJECT_PATH/docker/.env
+echo "SERVER="$SERVER >> $PROJECT_PATH/docker/.env
 
-cd docker
+cd $PROJECT_PATH/docker
+docker rm server-container
+docker rm php-container
+docker rm database-container
 docker compose up --build
