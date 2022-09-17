@@ -94,7 +94,14 @@ read -p 'Do you wish to have a custom domain? e.g. dev.myproject.com  [y/n]' HAS
 
 if [ $HAS_CUSTOM_DOMAIN = 'y' ]; then
     read -p 'Please type your custom domain: ' CUSTOM_DOMAIN
-    sed -i "s/localhost/$CUSTOM_DOMAIN www.$CUSTOM_DOMAIN/" docker/nginx/sites/default.conf
+
+    if [ $SERVER = 'nginx' ]; then
+        sed -i "s/localhost/$CUSTOM_DOMAIN www.$CUSTOM_DOMAIN/" docker/nginx/sites/default.conf
+    fi
+
+    if [ $SERVER = 'apache' ]; then
+        sed -i "s/docker-symfony.dev/$CUSTOM_DOMAIN/" docker/apache/vhost.conf
+    fi
 fi
 
 echo "APP_ENV=dev" >> ./docker/.env
