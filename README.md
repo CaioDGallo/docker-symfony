@@ -12,7 +12,8 @@ This project is a simple bash script to setup a docker environment, with docker 
 
 ## Download
 
-- Ubuntu and Debian based distros
+- Ubuntu and Debian based distros 
+PS: It does need `sudo` permission for some file copying and permission changes
 ```sh
 bash <(curl -s https://raw.githubusercontent.com/CaioDGallo/docker-symfony/main/install.sh)
 ```
