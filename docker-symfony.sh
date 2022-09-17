@@ -173,7 +173,7 @@ if [ $DATABASE = 'mysql' ]; then
 fi
 
 if [ $SERVER = 'nginx' ]; then
-    mkdir $PROJECT_PATH/docker/logs/nginx
+    mkdir -p $PROJECT_PATH/docker/logs/nginx
     echo '' >> $PROJECT_PATH/docker/docker-compose.yml
     echo '' >> $PROJECT_PATH/docker/docker-compose.yml
 
@@ -197,7 +197,7 @@ if [ $SERVER = 'nginx' ]; then
 fi
 
 if [ $SERVER = 'apache' ]; then
-    mkdir $PROJECT_PATH/docker/logs/apache
+    mkdir -p $PROJECT_PATH/docker/logs/apache
     echo '' >> $PROJECT_PATH/docker/docker-compose.yml
     echo '' >> $PROJECT_PATH/docker/docker-compose.yml
 
