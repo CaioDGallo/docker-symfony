@@ -21,7 +21,7 @@ Docker-Symfony requires [Docker](https://docs.docker.com/engine/install/) to run
 
 ### Ubuntu
 
-- Run the `docker-symfony` command and follow the instructions.
+- Run the `docker-symfony PROJECT_PATH` command and follow the instructions.
 - If you choose to use custom vhosts, don't forget to add them to your `/etc/hosts` file.
 
 ![VHOSTS](docs/vhosts.png?raw=true "vhosts instruction")
