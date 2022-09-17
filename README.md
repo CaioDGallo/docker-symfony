@@ -19,4 +19,4 @@ Docker-Symfony requires [Docker](https://docs.docker.com/engine/install/) to run
 - Run the `docker-symfony` command and follow the instructions.
 - If you choose to use custom vhosts, don't forget to add them to your `/etc/hosts` file.
 
-(docs/vhosts.png)
+![VHOSTS](docs/vhosts.png?raw=true "vhosts instruction")
