@@ -11,7 +11,7 @@ fi
 
 cp -r /etc/docker-symfony/docker $PROJECT_PATH
 
-cd $PROJECT_PATH/docker
+touch $PROJECT_PATH/docker/.env
 
 echo '' > $PROJECT_PATH/docker/.env
 
@@ -173,7 +173,7 @@ if [ $DATABASE = 'mysql' ]; then
 fi
 
 if [ $SERVER = 'nginx' ]; then
-    mkdir logs/nginx
+    mkdir $PROJECT_PATH/docker/logs/nginx
     echo '' >> $PROJECT_PATH/docker/docker-compose.yml
     echo '' >> $PROJECT_PATH/docker/docker-compose.yml
 
@@ -197,7 +197,7 @@ if [ $SERVER = 'nginx' ]; then
 fi
 
 if [ $SERVER = 'apache' ]; then
-    mkdir logs/apache
+    mkdir $PROJECT_PATH/docker/logs/apache
     echo '' >> $PROJECT_PATH/docker/docker-compose.yml
     echo '' >> $PROJECT_PATH/docker/docker-compose.yml
 
@@ -240,6 +240,7 @@ echo "PHP_VERSION="$PHP_VERSION >> $PROJECT_PATH/docker/.env
 echo "DATABASE="$DATABASE >> $PROJECT_PATH/docker/.env
 echo "SERVER="$SERVER >> $PROJECT_PATH/docker/.env
 
+cd $PROJECT_PATH/docker
 docker rm server-container
 docker rm php-container
 docker rm database-container
