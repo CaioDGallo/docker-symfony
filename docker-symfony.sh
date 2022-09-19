@@ -9,6 +9,7 @@ fi
 echo 'Welcome to the docker-symfony setup'
 
 PROJECT_PATH=$1
+CURRENT_PATH=$(pwd)
 
 if [ "${PROJECT_PATH: -1}" == "/" ]; then
     PROJECT_PATH=${PROJECT_PATH:0:-1}
@@ -16,6 +17,10 @@ fi
 
 if [ "$1" == "." ]; then
     PROJECT_PATH=$(pwd)
+else
+    if [ ! -d "$CURRENT_PATH/$PROJECT_PATH" ]; then
+      mkdir "$CURRENT_PATH/$PROJECT_PATH"
+    fi
 fi
 
 cp -r /etc/docker-symfony/docker $PROJECT_PATH
