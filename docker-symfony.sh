@@ -4,6 +4,7 @@ echo 'Welcome to the docker-symfony setup'
 
 if [ "$1" == "--uninstall" ]; then
     sudo rm -rf /etc/docker-symfony && sudo rm -rf /usr/bin/docker-symfony
+    exit;
 fi
 
 PROJECT_PATH=$1
