@@ -13,7 +13,7 @@ This project is a simple bash script to setup a docker environment, with docker 
 ## Download
 
 - Ubuntu and Debian based distros 
-> Note: It does need `sudo` permission for some file copying and permission changes
+> Note: It does need `root` permission (sudo) for some file copying and permission changes
 ```sh
 bash <(curl -s https://raw.githubusercontent.com/CaioDGallo/docker-symfony/main/install.sh)
 ```
@@ -28,3 +28,8 @@ Docker-Symfony requires [Docker](https://docs.docker.com/engine/install/) to run
 - If you choose to use custom vhosts, don't forget to add them to your `/etc/hosts` file.
 
 ![VHOSTS](docs/vhosts.png?raw=true "vhosts instruction")
+
+## Uninstall
+
+- To remove Docker-Symfony from your system run `docker-symfony --uninstall`
+> Note: It needs `root` permission
