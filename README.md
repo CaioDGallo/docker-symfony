@@ -22,10 +22,12 @@ bash <(curl -s https://raw.githubusercontent.com/CaioDGallo/docker-symfony/main/
 
 Docker-Symfony requires [Docker](https://docs.docker.com/engine/install/) to run.
 
-### Ubuntu
+### Ubuntu/WSL2
 
 - Run the `docker-symfony PROJECT_PATH` command and follow the instructions.
-- If you choose to use custom vhosts, don't forget to add them to your `/etc/hosts` file.
+- If you choose to use custom vhosts, don't forget to add them to your hosts file: 
+    - `/etc/hosts` for Ubuntu
+    - `C:\Windows\System32\Drivers\etc\hosts` on the Windows host machine for WSL2 installations.
 
 ![VHOSTS](docs/vhosts.png?raw=true "vhosts instruction")
 
